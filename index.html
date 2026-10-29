@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A Birthday Journey 🎈 · Muslim Uddin Babu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<style>
+:root {
+  --bg: #fff4ea;
+  --card: #ffffff;
+  --line: #ffd3e2;
+  --text: #5a2448;
+  --soft: #8c5b78;
+  --gold: #f59e0b;
+  --pink: #ff5c93;
+}
+html { scroll-behavior: smooth; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 0 14px 60px;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  color: var(--text);
+  background: radial-gradient(900px 600px at 0 0, #ffe0ee, transparent 60%),
+              radial-gradient(900px 600px at 100% 100%, #d9f1ff, transparent 60%),
+              radial-gradient(700px 500px at 100% 0, #fff0b8, transparent 60%),
+              var(--bg);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+/* Header bar */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 211, 226, 0.8);
+}
+.brand { font-family: 'Playfair Display', serif; font-weight: 700; color: #5a2448; font-size: 0.95rem; }
+.btn-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #ffccd9;
+  background: #ffffff;
+  color: #ff5c93;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.btn-pill:hover { background: #ffeef3; transform: scale(1.03); }
+
+/* Decorative Bunting Flags */
+.flags { display: flex; justify-content: center; gap: 6px; padding: 74px 0 10px; position: relative; z-index: 2; }
+.flags i { width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 28px solid var(--c); filter: drop-shadow(0 3px 2px #0001); }
+
+/* Card Section */
+section {
+  max-width: 480px;
+  margin: 26px auto;
+  padding: 46px 20px 38px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 16px;
+  position: relative;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid #ffffff;
+  border-radius: 36px;
+  box-shadow: 0 16px 40px rgba(232, 70, 124, 0.12), 0 0 0 6px rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+}
+section::before {
+  content: attr(data-n);
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #ff8fb8, #ffb86b);
+  color: #fff;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 999px;
+  box-shadow: 0 6px 14px rgba(255, 92, 147, 0.35);
+  white-space: nowrap;
+  font-weight: 700;
+}
+h1, h2 { margin: 0; font-family: 'Playfair Display', serif; font-weight: 700; color: #2d1326; }
+h1 { font-size: clamp(2.2rem, 8vw, 3.2rem); line-height: 1.15; }
+h2 { font-size: clamp(1.6rem, 6vw, 2.1rem); }
+em { color: var(--pink); font-style: italic; font-family: 'Playfair Display', serif; }
+p { margin: 0; color: var(--soft); line-height: 1.6; font-size: 0.92rem; max-width: 36ch; }
+.btn-main {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px 28px;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(135deg, #ff5c93, #ffa066);
+  box-shadow: 0 8px 22px rgba(255, 92, 147, 0.35);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-main:active { transform: scale(0.96); }
+
+/* Ambient background stars */
+.star { position: fixed; width: 6px; height: 6px; border-radius: 50%; pointer-events: none; opacity: 0.5; animation: tw 3s infinite; z-index: 0; }
+@keyframes tw { 50% { opacity: 0.1; transform: scale(0.5); } }
+
+/* Cake */
+.cake { width: 220px; height: 210px; position: relative; margin: 20px 0 10px; }
+.tier { position: absolute; left: 50%; transform: translateX(-50%); border-radius: 14px 14px 10px 10px; box-shadow: 0 6px 14px rgba(232, 70, 124, 0.15); }
+.t1 { width: 190px; height: 60px; bottom: 0; background: linear-gradient(#ff85ae, #e63973); }
+.t2 { width: 140px; height: 50px; bottom: 60px; background: linear-gradient(#ffbdd6, #ff7ea9); }
+.t3 { width: 95px; height: 42px; bottom: 110px; background: linear-gradient(#ffecb5, #ffca58); }
+.drip { position: absolute; top: 0; left: 0; right: 0; height: 12px; background: rgba(255, 255, 255, 0.95); border-radius: 12px 12px 40% 40%; }
+.candle { position: absolute; bottom: 152px; left: 50%; width: 10px; height: 38px; margin-left: -5px; background: repeating-linear-gradient(135deg, #fff 0 6px, #42b2ff 6px 12px); border-radius: 3px; }
+.flame {
+  position: absolute;
+  bottom: 190px;
+  left: 50%;
+  margin-left: -9px;
+  width: 18px;
+  height: 26px;
+  background: radial-gradient(ellipse at 50% 70%, #fff, #ffd166 40%, #ff7a3d 80%);
+  border-radius: 50%/60% 60% 40% 40%;
+  filter: drop-shadow(0 0 14px #ffb347);
+  animation: fl 0.35s infinite alternate;
+  cursor: pointer;
+  transition: opacity 0.5s, transform 0.5s;
+}
+.flame::before { content: ""; position: absolute; inset: -20px; }
+@keyframes fl { to { transform: scale(1.15, 0.92) rotate(3deg); } }
+.flame.out { opacity: 0; transform: translateY(-10px) scale(0.3); pointer-events: none; }
+.wish { min-height: 2.8em; font-family: 'Playfair Display', serif; font-style: italic; color: var(--pink); font-size: 1.15rem; font-weight: 600; }
+
+/* 8 Reasons Grid */
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; margin-top: 10px; }
+.fc { perspective: 800px; height: 170px; cursor: pointer; }
+.fi { position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+.fc.flip .fi { transform: rotateY(180deg); }
+.fc div.f, .fc div.b {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+}
+.f { font-size: 2.2rem; background: #fff5f8; border: 2px solid #fff; box-shadow: 0 6px 14px rgba(232, 70, 124, 0.08); }
+.f span { font-size: 0.72rem; color: #ff5c93; font-weight: 600; margin-top: 6px; }
+.b {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  background: linear-gradient(135deg, #ff6b98, #ffa15d);
+  color: #fff;
+  transform: rotateY(180deg);
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Coupon */
+.coupon-box {
+  width: 100%;
+  min-height: 110px;
+  border: 2px dashed #ffa066;
+  border-radius: 20px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fffaf0, #ffeaf2);
+  transition: transform 0.35s;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: #4a1f3c;
+  position: relative;
+}
+.coupon-box.pop { transform: rotate(-2deg) scale(1.05); }
+
+/* Game Arena */
+#arena {
+  position: relative;
+  width: 100%;
+  height: 290px;
+  border: 2px solid var(--line);
+  border-radius: 22px;
+  background: linear-gradient(#fff0f6, #ebf6ff);
+  overflow: hidden;
+  touch-action: manipulation;
+}
+.h {
+  position: absolute;
+  top: -40px;
+  font-size: 2.2rem;
+  user-select: none;
+  cursor: pointer;
+  animation: fall linear forwards;
+}
+@keyframes fall { to { transform: translateY(350px); } }
+.bar { display: flex; gap: 24px; font-size: 0.95rem; font-weight: 600; }
+
+/* Letter */
+.env { width: 100%; cursor: pointer; position: relative; }
+.env .top {
+  height: 130px;
+  background: linear-gradient(135deg, #ffb3cf, #ff8fb8);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  box-shadow: 0 12px 26px rgba(232, 70, 124, 0.25);
+}
+.letter {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 1.4s, opacity 1.2s;
+  background: repeating-linear-gradient(#fffdf7 0 31px, #f6dfe8 31px 32px);
+  color: #4a2340;
+  border: 2px solid #ffd3e2;
+  border-radius: 18px;
+  text-align: left;
+  line-height: 1.7;
+  font-size: 0.98rem;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+.letter.open { max-height: 4000px; opacity: 1; margin-top: 16px; }
+.letter div { padding: 22px; white-space: pre-wrap; }
+
+/* Footer */
+footer { text-align: center; font-size: 0.85rem; color: var(--soft); margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">🎉 Babu's Day</div>
+  <div style="display: flex; gap: 8px;">
+    <button class="btn-pill" id="bgmBtn" onclick="toggleMusic()">🎵 Music Box</button>
+    <button class="btn-pill" onclick="fireCannon()">✨ Sparkle</button>
+  </div>
+</header>
+
+<div class="flags">
+  <i style="--c:#ff7aa8"></i><i style="--c:#ffd166"></i><i style="--c:#6cc4ff"></i><i style="--c:#b69cff"></i><i style="--c:#7bd88f"></i><i style="--c:#ff9e5e"></i><i style="--c:#ff7aa8"></i>
+</div>
+
+<section id="hero" data-n="Happy Birthday">
+  <div style="font-size:3.2rem; animation: bounce 2s infinite">🎈</div>
+  <h1>Happy Birthday,<br><em>Handsome</em></h1>
+  <p>For Muslim Uddin Babu, my Handsome. Scroll slowly, there’s a lot inside.</p>
+  <button class="btn-main" onclick="go('s-wish')">Start your surprise ✨</button>
+</section>
+
+<section id="s-wish" data-n="1 · Wish">
+  <h2>First, make a wish</h2>
+  <p>Tap the flame, close your eyes, and think of something big.</p>
+  <div class="cake">
+    <div class="candle"></div>
+    <div class="flame" id="flame" onclick="blowCake()"></div>
+    <div class="tier t3"><div class="drip"></div></div>
+    <div class="tier t2"><div class="drip"></div></div>
+    <div class="tier t1"><div class="drip"></div></div>
+  </div>
+  <div class="wish" id="wish"></div>
+</section>
+
+<section id="s-reasons" data-n="2 · Reasons">
+  <h2>8 reasons you’re <em>amazing</em></h2>
+  <p>Tap each card to flip it and read the note inside.</p>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="s-coupons" data-n="3 · Coupons">
+  <h2>Your birthday coupons 🎟️</h2>
+  <p>Tap to pull one. Each one is 100% valid, no expiry date!</p>
+  <div class="coupon-box" id="coupon">Tap to pull your coupon 🎟️</div>
+  <button class="btn-main" onclick="pullCoupon()">Pull a coupon</button>
+</section>
+
+<section id="s-game" data-n="4 · Mini Game">
+  <h2>Catch the hearts 💗</h2>
+  <p>20 seconds. Tap as many as you can!</p>
+  <div class="bar">
+    <span>Score: <b id="sc" style="color:var(--pink)">0</b></span>
+    <span>Time: <b id="tm">20</b>s</span>
+  </div>
+  <div id="arena"></div>
+  <button class="btn-main" id="startBtn" onclick="startGame()">Start Game</button>
+  <p id="gmsg" style="min-height: 2em; font-family:'Playfair Display', serif; font-style:italic; color:var(--pink)"></p>
+</section>
+
+<section id="s-letter" data-n="5 · Letter">
+  <h2>One last thing</h2>
+  <p>There is a letter for you. Tap the wax-sealed envelope.</p>
+  <div class="env" id="env" onclick="openLetter()">
+    <div class="top" id="etop">💌</div>
+    <div class="letter" id="letter"><div id="ltxt"></div></div>
+  </div>
+</section>
+
+<footer>
+  Crafted with love for Muslim Uddin Babu · From Your Sononono ❤️
+</footer>
+
+<script>
+// Web Audio Synthesizer: Zero-dependency music box & sound effects
+let audioCtx = null;
+let isMusicPlaying = false;
+let musicTimer = null;
+
+function initAudio() {
+  if (!audioCtx) {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioCtx();
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playTone(freq, duration = 0.8) {
+  initAudio();
+  if (!audioCtx) return;
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(freq, now);
+  gain.gain.setValueAtTime(0.001, now);
+  gain.gain.exponentialRampToValueAtTime(0.3, now + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start(now);
+  osc.stop(now + duration + 0.1);
+}
+
+function toggleMusic() {
+  initAudio();
+  const btn = document.getElementById('bgmBtn');
+  if (isMusicPlaying) {
+    isMusicPlaying = false;
+    clearTimeout(musicTimer);
+    btn.textContent = '🎵 Music Box';
+  } else {
+    isMusicPlaying = true;
+    btn.textContent = '⏸ Pause Melody';
+    playHappyBirthdayMelody();
+  }
+}
+
+function playHappyBirthdayMelody() {
+  const notes = [
+    { f: 523.25, d: 0.5, gap: 0.35 },
+    { f: 523.25, d: 0.4, gap: 0.35 },
+    { f: 587.33, d: 0.7, gap: 0.6 },
+    { f: 523.25, d: 0.7, gap: 0.6 },
+    { f: 698.46, d: 0.7, gap: 0.6 },
+    { f: 659.25, d: 1.2, gap: 1.0 },
+
+    { f: 523.25, d: 0.5, gap: 0.35 },
+    { f: 523.25, d: 0.4, gap: 0.35 },
+    { f: 587.33, d: 0.7, gap: 0.6 },
+    { f: 523.25, d: 0.7, gap: 0.6 },
+    { f: 783.99, d: 0.7, gap: 0.6 },
+    { f: 698.46, d: 1.2, gap: 1.0 },
+
+    { f: 523.25, d: 0.5, gap: 0.35 },
+    { f: 523.25, d: 0.4, gap: 0.35 },
+    { f: 1046.50, d: 0.8, gap: 0.6 },
+    { f: 880.00, d: 0.7, gap: 0.6 },
+    { f: 698.46, d: 0.7, gap: 0.6 },
+    { f: 659.25, d: 0.7, gap: 0.6 },
+    { f: 587.33, d: 1.2, gap: 0.9 },
+
+    { f: 932.33, d: 0.5, gap: 0.35 },
+    { f: 932.33, d: 0.4, gap: 0.35 },
+    { f: 880.00, d: 0.7, gap: 0.6 },
+    { f: 698.46, d: 0.7, gap: 0.6 },
+    { f: 783.99, d: 0.7, gap: 0.6 },
+    { f: 698.46, d: 1.6, gap: 1.6 }
+  ];
+  let idx = 0;
+  function step() {
+    if (!isMusicPlaying) return;
+    const cur = notes[idx];
+    playTone(cur.f, cur.d);
+    idx = (idx + 1) % notes.length;
+    musicTimer = setTimeout(step, cur.gap * 1000);
+  }
+  step();
+}
+
+// Background stars
+for(let i=0; i<40; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.backgroundColor = ['#ff9ec4', '#ffd166', '#6cc4ff', '#b69cff'][i % 4];
+  s.style.left = (Math.random() * 100) + '%';
+  s.style.top = (Math.random() * 100) + '%';
+  s.style.animationDelay = (Math.random() * 3) + 's';
+  document.body.appendChild(s);
+}
+
+function go(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+function fireCannon() {
+  if (window.confetti) {
+    confetti({ particleCount: 70, spread: 80, origin: { y: 0.6 } });
+  }
+}
+
+// Cake blow
+let cakeDone = false;
+function blowCake() {
+  if (cakeDone) return;
+  cakeDone = true;
+  document.getElementById('flame').classList.add('out');
+  playTone(880, 0.4);
+  setTimeout(() => playTone(1174, 0.6), 150);
+  fireCannon();
+
+  const msg = 'May every wish you just made come true ✨';
+  const el = document.getElementById('wish');
+  let i = 0;
+  function type() {
+    el.textContent = msg.slice(0, ++i);
+    if (i < msg.length) setTimeout(type, 45);
+  }
+  type();
+  setTimeout(() => go('s-reasons'), 3800);
+}
+
+// 8 Reasons
+const reasons = [
+  ["🌍", "You know how to make life easier for others, even if you don't realize how complicated mine feels."],
+  ["😜", "You learn things so quickly, understand people so well, and somehow notice everything except the little things about me. 😂"],
+  ["💪", "You have a strong personality and the courage to face life's challenges."],
+  ["🧠", "You treat people with kindness, and that's one of the best things about you."],
+  ["🎯", "You're focused, determined, and know how to handle things in your own way."],
+  ["🫶", "You have a genuinely good heart, and your actions often speak louder than words."],
+  ["🦋", "You have the ability to learn from experiences and become wiser with time."],
+  ["❤️", "You're a genuinely nice guy with a strong personality, a sharp mind, and a heart worth appreciating."]
+];
+
+const grid = document.getElementById('grid');
+reasons.forEach(r => {
+  const c = document.createElement('div');
+  c.className = 'fc';
+  c.innerHTML = `
+    <div class="fi">
+      <div class="f">${r[0]}<span>Tap to flip</span></div>
+      <div class="b">${r[1]}</div>
+    </div>
+  `;
+  c.onclick = () => {
+    c.classList.toggle('flip');
+    playTone(550, 0.15);
+  };
+  grid.appendChild(c);
+});
+
+// Coupons
+const coupons = [
+  "Free hugs, no refunds 🤗",
+  "One free forehead kiss whenever your brain starts buffering 😚🧠",
+  "Your choice, my complaints 🎬😂",
+  "Unlimited food theft 🍟",
+  "One personal hype session. You're the hottest man alive.",
+  "10-minute massage, 2-minute effort 💆",
+  "One day of royal treatment 👑",
+  "One free \"Yes Bebs\" 😘",
+  "Unlimited annoying texts 📱",
+  "One free anger management session, for me 😂",
+  "Cuddles, even during my villain era 😈",
+  "One free apology, even when you're guilty 🤡"
+];
+let lastC = -1;
+function pullCoupon() {
+  let n;
+  do { n = Math.floor(Math.random() * coupons.length); } while (n === lastC);
+  lastC = n;
+  const box = document.getElementById('coupon');
+  box.textContent = coupons[n];
+  box.classList.add('pop');
+  setTimeout(() => box.classList.remove('pop'), 350);
+  playTone(660, 0.2);
+  fireCannon();
+}
+
+// Mini Game
+const arena = document.getElementById('arena');
+let score = 0, time = 20, isPlaying = false, spawner, countdown;
+
+function spawnHeart() {
+  const h = document.createElement('div');
+  h.className = 'h';
+  h.textContent = ['💗', '💖', '💘', '💝'][Math.floor(Math.random() * 4)];
+  h.style.left = (Math.random() * 85) + '%';
+  h.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+  
+  h.onpointerdown = (e) => {
+    e.preventDefault();
+    if (!isPlaying) return;
+    score++;
+    document.getElementById('sc').textContent = score;
+    playTone(440 + score * 30, 0.15);
+    h.remove();
+  };
+  arena.appendChild(h);
+  setTimeout(() => h.remove(), 3500);
+}
+
+function startGame() {
+  if (isPlaying) return;
+  isPlaying = true;
+  score = 0;
+  time = 20;
+  document.getElementById('sc').textContent = '0';
+  document.getElementById('tm').textContent = '20';
+  document.getElementById('gmsg').textContent = '';
+  document.getElementById('startBtn').textContent = 'Catching...';
+
+  spawner = setInterval(spawnHeart, 500);
+  countdown = setInterval(() => {
+    time--;
+    document.getElementById('tm').textContent = time;
+    if (time <= 0) {
+      clearInterval(spawner);
+      clearInterval(countdown);
+      isPlaying = false;
+      arena.innerHTML = '';
+      document.getElementById('startBtn').textContent = 'Play Again';
+      const msg = score >= 18 
+        ? `Legendary! ${score} hearts. You already have mine though 😉`
+        : score >= 10
+        ? `${score} hearts, nice catch! Want to beat it?`
+        : `${score} hearts. Try again Handsome, I believe in you!`;
+      document.getElementById('gmsg').textContent = msg;
+      fireCannon();
+    }
+  }, 1000);
+}
+
+// Secret Letter
+const letterText = `Dear Muslim Uddin Babu,
+Happy Birthday, Handsome🎂💖.
+
+Sometimes, I wonder how one person can become such an important part of another person's life. And then I think of you. Somehow, you've become a part of my happiness, my thoughts, my prayers, and obviously my scars, my runner without any destination, 😜.
+
+I may not always find the perfect words to express what you mean to me, but I hope my love makes you feel valued, understood, and appreciated. You deserve a love that brings you peace, a life that makes you proud, and happiness that stays even on your hardest days. If I could give you one thing today, it would be the ability to see yourself through my eyes. Maybe then you'd understand just how special you are to me.
+
+On your birthday, I pray that Allah protects you, guides you, blesses your efforts, and grants you everything that is good for you.
+
+Thank you for being someone my heart holds so dearly.
+
+Happy Birthday, my handsome boy. No matter how many birthdays pass, I hope my love always finds a way to make you feel special.
+
+Now come here and collect your hugs & kisses Bebs 🫣💋
+
+With all my heart,
+Your Sononono.`;
+
+let letterOpened = false;
+function openLetter() {
+  if (letterOpened) return;
+  letterOpened = true;
+  document.getElementById('etop').textContent = '💖';
+  document.getElementById('letter').classList.add('open');
+  fireCannon();
+  playTone(523.25, 0.4);
+
+  const el = document.getElementById('ltxt');
+  let i = 0;
+  function typeL() {
+    el.textContent = letterText.slice(0, ++i);
+    if (i < letterText.length) setTimeout(typeL, 14);
+  }
+  typeL();
+}
+</script>
+</body>
+</html>
